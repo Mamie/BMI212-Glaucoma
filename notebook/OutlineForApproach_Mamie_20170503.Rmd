@@ -1,0 +1,76 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# Association between diabetes and neurodegeneration
+
+## Does diabetes affect the time it takes to develop neurodegenerative diseases?
+
+In order to answer this question, we need to find the patients answered yes in the question if they ever have diabetes. 
+
+```{r}
+library(dplyr)
+library(ggplot2)
+readDatFile <- function(path) {
+  read.csv(path, stringsAsFactors = F, header = T, sep='\t')
+}
+WHI.f134 <- readDatFile('data/WHI/Medical History/f134_ctos_inv/f134_ctos_inv.dat')
+```
+```{r}
+print(sum(WHI.f134$F134DIAB, na.rm=T))
+print(sum(WHI.f134$F134PARKINS, na.rm=T))
+```
+
+There are in total 13840 participants who answered yes. There is also a Parkisons disease column, and there are 1260 individuals answered yes.
+
+Now take a look at all the individuals in the observation study follow up survey, and collect the neurodegeneration and macular degeneration variables
+
+```{r}
+WHI.baseline <- readDatFile('data/WHI/Medical History/f30_ctos_inv/f30_ctos_inv.dat')
+WHI.os3 <- readDatFile('data/WHI/OS Followup/f143_av3_os_inv/f143_av3_os_inv.dat')
+WHI.os4 <- readDatFile('data/WHI/OS Followup/f144_av4_os_inv/f144_av4_os_inv.dat')
+WHI.os5 <- readDatFile('data/WHI/OS Followup/f145_av5_os_inv/f145_av5_os_inv.dat')
+WHI.os6 <- readDatFile('data/WHI/OS Followup/f146_av6_os_inv/f146_av6_os_inv.dat')
+WHI.os7 <- readDatFile('data/WHI/OS Followup/f147_av7_os_inv/f147_av7_os_inv.dat')
+WHI.baseline2 <- readDatFile('data/WHI/Demographics/f2_ctos_inv/f2_ctos_inv.dat')
+```
+
+
+Now join the followup data with selected column with the main WHI f134 data (left join).
+
+```{r}
+WHI.merged <- WHI.baseline2[, c('ID', 'AGE', 'F2DAYS', 'DIAB', 'DIABAGE', 'DIABCOMA', 'DBDIETF2', 'INSULIN', 'INSULINW', 'DIABPILL', 'DIABNW')] %>%
+  filter(!is.na(DIAB)) %>%
+  left_join(WHI.f134[, c('ID', 'F134DAYS', 'F134PARKINS', 'F134DIAB')]) %>%
+  left_join(WHI.baseline[,c('ID', 'F30DAYS', 'ALZHEIM', 'MS', 'PARKINS', 'ALS', 'GLAUCOMA')]) %>%
+  left_join(WHI.os3[,c('ID', 'F143DAYS', 'MACDEGNR_3', 'ALZHEIM_3', 'MS_3', 'PARKINS_3', 'ALS_3')]) %>%
+  left_join(WHI.os4[,c('ID', 'F144DAYS', 'MACDEGNR_4', 'ALZHEIM_4', 'MS_4', 'PARKINS_4', 'ALS_4')]) %>%
+  left_join(WHI.os5[,c('ID', 'F145DAYS', 'MACDEGNR_5', 'ALZHEIM_5', 'MS_5', 'PARKINS_5', 'ALS_5')]) %>%
+  left_join(WHI.os6[,c('ID', 'F146DAYS', 'MACDEGNR_6', 'ALZHEIM_6', 'MS_6', 'PARKINS_6', 'ALS_6')]) %>%
+  left_join(WHI.os7[,c('ID', 'F147DAYS', 'MACDEGNR_7', 'ALZHEIM_7', 'MS_7', 'PARKINS_7', 'ALS_7')]) 
+```
+
+
+Now remove those that completely have no followup.
+
+```{r}
+nodata.idx <- apply(WHI.merged, 1, function(x) {
+  sum(is.na(x[seq(20, 49)])) == 30
+})
+WHI.filtered <- WHI.merged[!nodata.idx,]
+```
+
+After removing those that have absolutely no followup, only half of the original population is left. There are 62590 people in the dataset.
+
+## Estimate the time to parkison's disease using mixed model
+
+Use `nlme` for nonlinear mixed effect model
+
+```{r}
+library(lme4)
+
+```
+
+
+
