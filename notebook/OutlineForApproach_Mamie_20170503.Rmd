@@ -34,13 +34,15 @@ WHI.os5 <- readDatFile('data/WHI/OS Followup/f145_av5_os_inv/f145_av5_os_inv.dat
 WHI.os6 <- readDatFile('data/WHI/OS Followup/f146_av6_os_inv/f146_av6_os_inv.dat')
 WHI.os7 <- readDatFile('data/WHI/OS Followup/f147_av7_os_inv/f147_av7_os_inv.dat')
 WHI.baseline2 <- readDatFile('data/WHI/Demographics/f2_ctos_inv/f2_ctos_inv.dat')
+WHI.baseline3 <- readDatFile('data/WHI/Demographics/dem_ctos_inv/dem_ctos_inv.dat')
+personalInfo <- readDatFile('data/WHI/Demographics/f20_ctos_inv/f20_ctos_inv.dat')
 ```
 
 
 Now join the followup data with selected column with the main WHI f134 data (left join).
 
 ```{r}
-WHI.merged <- WHI.baseline2[, c('ID', 'AGE', 'F2DAYS', 'DIAB', 'DIABAGE', 'DIABCOMA', 'DBDIETF2', 'INSULIN', 'INSULINW', 'DIABPILL', 'DIABNW')] %>%
+WHI.merged <- WHI.baseline2[, c('ID', 'RACE', 'F2DAYS', 'DIAB', 'DIABAGE', 'DIABCOMA', 'DBDIETF2', 'INSULIN', 'INSULINW', 'DIABPILL', 'DIABNW')] %>%
   filter(!is.na(DIAB)) %>%
   left_join(WHI.f134[, c('ID', 'F134DAYS', 'F134PARKINS', 'F134DIAB')]) %>%
   left_join(WHI.baseline[,c('ID', 'F30DAYS', 'ALZHEIM', 'MS', 'PARKINS', 'ALS', 'GLAUCOMA')]) %>%
@@ -48,7 +50,13 @@ WHI.merged <- WHI.baseline2[, c('ID', 'AGE', 'F2DAYS', 'DIAB', 'DIABAGE', 'DIABC
   left_join(WHI.os4[,c('ID', 'F144DAYS', 'MACDEGNR_4', 'ALZHEIM_4', 'MS_4', 'PARKINS_4', 'ALS_4')]) %>%
   left_join(WHI.os5[,c('ID', 'F145DAYS', 'MACDEGNR_5', 'ALZHEIM_5', 'MS_5', 'PARKINS_5', 'ALS_5')]) %>%
   left_join(WHI.os6[,c('ID', 'F146DAYS', 'MACDEGNR_6', 'ALZHEIM_6', 'MS_6', 'PARKINS_6', 'ALS_6')]) %>%
-  left_join(WHI.os7[,c('ID', 'F147DAYS', 'MACDEGNR_7', 'ALZHEIM_7', 'MS_7', 'PARKINS_7', 'ALS_7')]) 
+  left_join(WHI.os7[,c('ID', 'F147DAYS', 'MACDEGNR_7', 'ALZHEIM_7', 'MS_7', 'PARKINS_7', 'ALS_7')]) %>%
+  left_join(WHI.baseline3[, c("ID", "AGE")]) %>%
+  left_join(personalInfo[,c("ID", "EDUC")])
+
+positive <- function(x) {
+  sum(x, na.rm=T) > 0
+}
 ```
 
 
@@ -56,12 +64,32 @@ Now remove those that completely have no followup.
 
 ```{r}
 nodata.idx <- apply(WHI.merged, 1, function(x) {
-  sum(is.na(x[seq(20, 49)])) == 30
+  sum(is.na(x[seq(21, 50)])) == 30
 })
 WHI.filtered <- WHI.merged[!nodata.idx,]
 ```
 
+
 After removing those that have absolutely no followup, only half of the original population is left. There are 62590 people in the dataset.
+
+```{r}
+diabetes <- apply(WHI.filtered[, c("DIAB", "F134DIAB")], 1, positive)
+NDD <- apply(WHI.filtered[, c('F134PARKINS', 'ALZHEIM_3', 'MS_3', 'PARKINS_3', 'ALS_3', 'ALZHEIM_4', 'MS_4', 'PARKINS_4', 'ALS_4', 'ALZHEIM_5', 'MS_5', 'PARKINS_5', 'ALS_5', 'ALZHEIM_6', 'MS_6', 'PARKINS_6', 'ALS_6', 'ALZHEIM_7', 'MS_7', 'PARKINS_7', 'ALS_7')], 1, positive)
+MS <- apply(WHI.filtered[, c('MS_3', 'MS_4', 'MS_5', 'MS_6', 'MS_7')], 1, positive)
+ALS <- apply(WHI.filtered[, c('ALS_3', 'ALS_4', 'ALS_5', 'ALS_6', 'ALS_7')], 1, positive)
+PARKINS <- apply(WHI.filtered[, c('F134PARKINS', 'PARKINS_3', 'PARKINS_4', 'PARKINS_5', 'PARKINS_6', 'PARKINS_7')], 1, positive)
+ALZHEIM <- apply(WHI.filtered[, c('ALZHEIM_4', 'ALZHEIM_5', 'ALZHEIM_6', 'ALZHEIM_7')], 1, positive)
+sum(diabetes & NDD)
+sum(diabetes & MS)
+sum(diabetes & ALS)
+sum(diabetes & ALZHEIM)
+sum(diabetes & PARKINS)
+sum(MS)
+sum(ALZHEIM)
+sum(ALS)
+sum(PARKINS)
+```
+
 
 ## Estimate the time to parkison's disease using mixed model
 
@@ -72,5 +100,10 @@ library(lme4)
 
 ```
 
+
+The baseline to correct for:
+Race, Education, Cigarette Smoking, BMI, Hypertension, prior cardiovascular disease (myocardial infarction, angina, percutaneous transluminal coronary angioplasty, coronary bypass grafting or stroke), hormone therapy assignment, hormone therapy placebo
+
+distribution of risk factors for neurodegenerative disease by diabetes at the time of WHI enrollment
 
 

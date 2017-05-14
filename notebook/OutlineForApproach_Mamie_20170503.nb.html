@@ -221,22 +221,20 @@ WHI.f134 &lt;- readDatFile('data/WHI/Medical History/f134_ctos_inv/f134_ctos_inv
 <p>Now take a look at all the individuals in the observation study follow up survey, and collect the neurodegeneration and macular degeneration variables</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuV0hJLmJhc2VsaW5lIDwtIHJlYWREYXRGaWxlKCdkYXRhL1dISS9NZWRpY2FsIEhpc3RvcnkvZjMwX2N0b3NfaW52L2YzMF9jdG9zX2ludi5kYXQnKVxuV0hJLm9zMyA8LSByZWFkRGF0RmlsZSgnZGF0YS9XSEkvT1MgRm9sbG93dXAvZjE0M19hdjNfb3NfaW52L2YxNDNfYXYzX29zX2ludi5kYXQnKVxuV0hJLm9zNCA8LSByZWFkRGF0RmlsZSgnZGF0YS9XSEkvT1MgRm9sbG93dXAvZjE0NF9hdjRfb3NfaW52L2YxNDRfYXY0X29zX2ludi5kYXQnKVxuV0hJLm9zNSA8LSByZWFkRGF0RmlsZSgnZGF0YS9XSEkvT1MgRm9sbG93dXAvZjE0NV9hdjVfb3NfaW52L2YxNDVfYXY1X29zX2ludi5kYXQnKVxuV0hJLm9zNiA8LSByZWFkRGF0RmlsZSgnZGF0YS9XSEkvT1MgRm9sbG93dXAvZjE0Nl9hdjZfb3NfaW52L2YxNDZfYXY2X29zX2ludi5kYXQnKVxuV0hJLm9zNyA8LSByZWFkRGF0RmlsZSgnZGF0YS9XSEkvT1MgRm9sbG93dXAvZjE0N19hdjdfb3NfaW52L2YxNDdfYXY3X29zX2ludi5kYXQnKVxuV0hJLmJhc2VsaW5lMiA8LSByZWFkRGF0RmlsZSgnZGF0YS9XSEkvRGVtb2dyYXBoaWNzL2YyX2N0b3NfaW52L2YyX2N0b3NfaW52LmRhdCcpXG5gYGAifQ== -->
-<pre class="r"><code>WHI.baseline &lt;- readDatFile('data/WHI/Medical History/f30_ctos_inv/f30_ctos_inv.dat')
-WHI.os3 &lt;- readDatFile('data/WHI/OS Followup/f143_av3_os_inv/f143_av3_os_inv.dat')
-WHI.os4 &lt;- readDatFile('data/WHI/OS Followup/f144_av4_os_inv/f144_av4_os_inv.dat')
-WHI.os5 &lt;- readDatFile('data/WHI/OS Followup/f145_av5_os_inv/f145_av5_os_inv.dat')
-WHI.os6 &lt;- readDatFile('data/WHI/OS Followup/f146_av6_os_inv/f146_av6_os_inv.dat')
-WHI.os7 &lt;- readDatFile('data/WHI/OS Followup/f147_av7_os_inv/f147_av7_os_inv.dat')
-WHI.baseline2 &lt;- readDatFile('data/WHI/Demographics/f2_ctos_inv/f2_ctos_inv.dat')</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGVyc29uYWxJbmZvIDwtIHJlYWREYXRGaWxlKCdkYXRhL1dISS9EZW1vZ3JhcGhpY3MvZGVtX2N0b3NfaW52L2YyMF9jdG9zX2ludi5kYXQnKVxuXG5gYGAifQ== -->
+<pre class="r"><code>personalInfo &lt;- readDatFile('data/WHI/Demographics/dem_ctos_inv/f20_ctos_inv.dat')
+</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiY2Fubm90IG9wZW4gZmlsZSAnZGF0YS9XSEkvRGVtb2dyYXBoaWNzL2RlbV9jdG9zX2ludi9mMjBfY3Rvc19pbnYuZGF0JzogTm8gc3VjaCBmaWxlIG9yIGRpcmVjdG9yeUVycm9yIGluIGZpbGUoZmlsZSwgXCJydFwiKSA6IGNhbm5vdCBvcGVuIHRoZSBjb25uZWN0aW9uXG4ifQ== -->
+<pre><code>cannot open file 'data/WHI/Demographics/dem_ctos_inv/f20_ctos_inv.dat': No such file or directoryError in file(file, &quot;rt&quot;) : cannot open the connection</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Now join the followup data with selected column with the main WHI f134 data (left join).</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuV0hJLm1lcmdlZCA8LSBXSEkuYmFzZWxpbmUyWywgYygnSUQnLCAnQUdFJywgJ0YyREFZUycsICdESUFCJywgJ0RJQUJBR0UnLCAnRElBQkNPTUEnLCAnREJESUVURjInLCAnSU5TVUxJTicsICdJTlNVTElOVycsICdESUFCUElMTCcsICdESUFCTlcnKV0gJT4lXG4gIGZpbHRlcighaXMubmEoRElBQikpICU+JVxuICBsZWZ0X2pvaW4oV0hJLmYxMzRbLCBjKCdJRCcsICdGMTM0REFZUycsICdGMTM0UEFSS0lOUycsICdGMTM0RElBQicpXSkgJT4lXG4gIGxlZnRfam9pbihXSEkuYmFzZWxpbmVbLGMoJ0lEJywgJ0YzMERBWVMnLCAnQUxaSEVJTScsICdNUycsICdQQVJLSU5TJywgJ0FMUycsICdHTEFVQ09NQScpXSkgJT4lXG4gIGxlZnRfam9pbihXSEkub3MzWyxjKCdJRCcsICdGMTQzREFZUycsICdNQUNERUdOUl8zJywgJ0FMWkhFSU1fMycsICdNU18zJywgJ1BBUktJTlNfMycsICdBTFNfMycpXSkgJT4lXG4gIGxlZnRfam9pbihXSEkub3M0WyxjKCdJRCcsICdGMTQ0REFZUycsICdNQUNERUdOUl80JywgJ0FMWkhFSU1fNCcsICdNU180JywgJ1BBUktJTlNfNCcsICdBTFNfNCcpXSkgJT4lXG4gIGxlZnRfam9pbihXSEkub3M1WyxjKCdJRCcsICdGMTQ1REFZUycsICdNQUNERUdOUl81JywgJ0FMWkhFSU1fNScsICdNU181JywgJ1BBUktJTlNfNScsICdBTFNfNScpXSkgJT4lXG4gIGxlZnRfam9pbihXSEkub3M2WyxjKCdJRCcsICdGMTQ2REFZUycsICdNQUNERUdOUl82JywgJ0FMWkhFSU1fNicsICdNU182JywgJ1BBUktJTlNfNicsICdBTFNfNicpXSkgJT4lXG4gIGxlZnRfam9pbihXSEkub3M3WyxjKCdJRCcsICdGMTQ3REFZUycsICdNQUNERUdOUl83JywgJ0FMWkhFSU1fNycsICdNU183JywgJ1BBUktJTlNfNycsICdBTFNfNycpXSkgXG5gYGAifQ== -->
-<pre class="r"><code>WHI.merged &lt;- WHI.baseline2[, c('ID', 'AGE', 'F2DAYS', 'DIAB', 'DIABAGE', 'DIABCOMA', 'DBDIETF2', 'INSULIN', 'INSULINW', 'DIABPILL', 'DIABNW')] %&gt;%
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuV0hJLm1lcmdlZCA8LSBXSEkuYmFzZWxpbmUyWywgYygnSUQnLCAnUkFDRScsICdGMkRBWVMnLCAnRElBQicsICdESUFCQUdFJywgJ0RJQUJDT01BJywgJ0RCRElFVEYyJywgJ0lOU1VMSU4nLCAnSU5TVUxJTlcnLCAnRElBQlBJTEwnLCAnRElBQk5XJyldICU+JVxuICBmaWx0ZXIoIWlzLm5hKERJQUIpKSAlPiVcbiAgbGVmdF9qb2luKFdISS5mMTM0WywgYygnSUQnLCAnRjEzNERBWVMnLCAnRjEzNFBBUktJTlMnLCAnRjEzNERJQUInKV0pICU+JVxuICBsZWZ0X2pvaW4oV0hJLmJhc2VsaW5lWyxjKCdJRCcsICdGMzBEQVlTJywgJ0FMWkhFSU0nLCAnTVMnLCAnUEFSS0lOUycsICdBTFMnLCAnR0xBVUNPTUEnKV0pICU+JVxuICBsZWZ0X2pvaW4oV0hJLm9zM1ssYygnSUQnLCAnRjE0M0RBWVMnLCAnTUFDREVHTlJfMycsICdBTFpIRUlNXzMnLCAnTVNfMycsICdQQVJLSU5TXzMnLCAnQUxTXzMnKV0pICU+JVxuICBsZWZ0X2pvaW4oV0hJLm9zNFssYygnSUQnLCAnRjE0NERBWVMnLCAnTUFDREVHTlJfNCcsICdBTFpIRUlNXzQnLCAnTVNfNCcsICdQQVJLSU5TXzQnLCAnQUxTXzQnKV0pICU+JVxuICBsZWZ0X2pvaW4oV0hJLm9zNVssYygnSUQnLCAnRjE0NURBWVMnLCAnTUFDREVHTlJfNScsICdBTFpIRUlNXzUnLCAnTVNfNScsICdQQVJLSU5TXzUnLCAnQUxTXzUnKV0pICU+JVxuICBsZWZ0X2pvaW4oV0hJLm9zNlssYygnSUQnLCAnRjE0NkRBWVMnLCAnTUFDREVHTlJfNicsICdBTFpIRUlNXzYnLCAnTVNfNicsICdQQVJLSU5TXzYnLCAnQUxTXzYnKV0pICU+JVxuICBsZWZ0X2pvaW4oV0hJLm9zN1ssYygnSUQnLCAnRjE0N0RBWVMnLCAnTUFDREVHTlJfNycsICdBTFpIRUlNXzcnLCAnTVNfNycsICdQQVJLSU5TXzcnLCAnQUxTXzcnKV0pICU+JVxuICBsZWZ0X2pvaW4oV0hJLmJhc2VsaW5lM1ssIGMoXCJJRFwiLCBcIkFHRVwiKV0pXG5cbmBgYCJ9 -->
+<pre class="r"><code>WHI.merged &lt;- WHI.baseline2[, c('ID', 'RACE', 'F2DAYS', 'DIAB', 'DIABAGE', 'DIABCOMA', 'DBDIETF2', 'INSULIN', 'INSULINW', 'DIABPILL', 'DIABNW')] %&gt;%
   filter(!is.na(DIAB)) %&gt;%
   left_join(WHI.f134[, c('ID', 'F134DAYS', 'F134PARKINS', 'F134DIAB')]) %&gt;%
   left_join(WHI.baseline[,c('ID', 'F30DAYS', 'ALZHEIM', 'MS', 'PARKINS', 'ALS', 'GLAUCOMA')]) %&gt;%
@@ -244,27 +242,98 @@ WHI.baseline2 &lt;- readDatFile('data/WHI/Demographics/f2_ctos_inv/f2_ctos_inv.d
   left_join(WHI.os4[,c('ID', 'F144DAYS', 'MACDEGNR_4', 'ALZHEIM_4', 'MS_4', 'PARKINS_4', 'ALS_4')]) %&gt;%
   left_join(WHI.os5[,c('ID', 'F145DAYS', 'MACDEGNR_5', 'ALZHEIM_5', 'MS_5', 'PARKINS_5', 'ALS_5')]) %&gt;%
   left_join(WHI.os6[,c('ID', 'F146DAYS', 'MACDEGNR_6', 'ALZHEIM_6', 'MS_6', 'PARKINS_6', 'ALS_6')]) %&gt;%
-  left_join(WHI.os7[,c('ID', 'F147DAYS', 'MACDEGNR_7', 'ALZHEIM_7', 'MS_7', 'PARKINS_7', 'ALS_7')]) </code></pre>
+  left_join(WHI.os7[,c('ID', 'F147DAYS', 'MACDEGNR_7', 'ALZHEIM_7', 'MS_7', 'PARKINS_7', 'ALS_7')]) %&gt;%
+  left_join(WHI.baseline3[, c(&quot;ID&quot;, &quot;AGE&quot;)])
+</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gYFsuZGF0YS5mcmFtZWAoV0hJLmJhc2VsaW5lMiwgLCBjKFwiSURcIiwgXCJBR0VcIiwgXCJGMkRBWVNcIiwgXCJESUFCXCIsICA6IFxuICB1bmRlZmluZWQgY29sdW1ucyBzZWxlY3RlZFxuIn0= -->
-<pre><code>Error in `[.data.frame`(WHI.baseline2, , c(&quot;ID&quot;, &quot;AGE&quot;, &quot;F2DAYS&quot;, &quot;DIAB&quot;,  : 
-  undefined columns selected</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiSm9pbmluZywgYnkgPSBcIklEXCJcbkpvaW5pbmcsIGJ5ID0gXCJJRFwiXG5Kb2luaW5nLCBieSA9IFwiSURcIlxuSm9pbmluZywgYnkgPSBcIklEXCJcbkpvaW5pbmcsIGJ5ID0gXCJJRFwiXG5Kb2luaW5nLCBieSA9IFwiSURcIlxuSm9pbmluZywgYnkgPSBcIklEXCJcbkpvaW5pbmcsIGJ5ID0gXCJJRFwiXG4ifQ== -->
+<pre><code>Joining, by = &quot;ID&quot;
+Joining, by = &quot;ID&quot;
+Joining, by = &quot;ID&quot;
+Joining, by = &quot;ID&quot;
+Joining, by = &quot;ID&quot;
+Joining, by = &quot;ID&quot;
+Joining, by = &quot;ID&quot;
+Joining, by = &quot;ID&quot;</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Now remove those that completely have no followup.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuV0hJLmZpbHRlcmVkIDwtIFdISS5kYXRhWyFub2RhdGEuaWR4LF1cblxuYGBgIn0= -->
-<pre class="r"><code>WHI.filtered &lt;- WHI.data[!nodata.idx,]
-</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubm9kYXRhLmlkeCA8LSBhcHBseShXSEkubWVyZ2VkLCAxLCBmdW5jdGlvbih4KSB7XG4gIHN1bShpcy5uYSh4W3NlcSgyMCwgNDkpXSkpID09IDMwXG59KVxuV0hJLmZpbHRlcmVkIDwtIFdISS5tZXJnZWRbIW5vZGF0YS5pZHgsXVxuYGBgIn0= -->
+<pre class="r"><code>nodata.idx &lt;- apply(WHI.merged, 1, function(x) {
+  sum(is.na(x[seq(20, 49)])) == 30
+})
+WHI.filtered &lt;- WHI.merged[!nodata.idx,]</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3I6IG9iamVjdCAnV0hJLmRhdGEnIG5vdCBmb3VuZFxuIn0= -->
-<pre><code>Error: object 'WHI.data' not found</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>After removing those that have absolutely no followup, only half of the original population is left. There are 62590 people in the dataset.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGlhYmV0ZXMgPC0gYXBwbHkoV0hJLmZpbHRlcmVkWywgYyhcIkRJQUJcIiwgXCJGMTM0RElBQlwiKV0sIDEsIHBvc2l0aXZlKVxuTkREIDwtIGFwcGx5KFdISS5maWx0ZXJlZFssIGMoJ0YxMzRQQVJLSU5TJywgJ0FMWkhFSU1fMycsICdNU18zJywgJ1BBUktJTlNfMycsICdBTFNfMycsICdBTFpIRUlNXzQnLCAnTVNfNCcsICdQQVJLSU5TXzQnLCAnQUxTXzQnLCAnQUxaSEVJTV81JywgJ01TXzUnLCAnUEFSS0lOU181JywgJ0FMU181JywgJ0FMWkhFSU1fNicsICdNU182JywgJ1BBUktJTlNfNicsICdBTFNfNicsICdBTFpIRUlNXzcnLCAnTVNfNycsICdQQVJLSU5TXzcnLCAnQUxTXzcnKV0sIDEsIHBvc2l0aXZlKVxuTVMgPC0gYXBwbHkoV0hJLmZpbHRlcmVkWywgYygnTVNfMycsICdNU180JywgJ01TXzUnLCAnTVNfNicsICdNU183JyldLCAxLCBwb3NpdGl2ZSlcbkFMUyA8LSBhcHBseShXSEkuZmlsdGVyZWRbLCBjKCdBTFNfMycsICdBTFNfNCcsICdBTFNfNScsICdBTFNfNicsICdBTFNfNycpXSwgMSwgcG9zaXRpdmUpXG5QQVJLSU5TIDwtIGFwcGx5KFdISS5maWx0ZXJlZFssIGMoJ0YxMzRQQVJLSU5TJywgJ1BBUktJTlNfMycsICdQQVJLSU5TXzQnLCAnUEFSS0lOU181JywgJ1BBUktJTlNfNicsICdQQVJLSU5TXzcnKV0sIDEsIHBvc2l0aXZlKVxuQUxaSEVJTSA8LSBhcHBseShXSEkuZmlsdGVyZWRbLCBjKCdBTFpIRUlNXzQnLCAnQUxaSEVJTV81JywgJ0FMWkhFSU1fNicsICdBTFpIRUlNXzcnKV0sIDEsIHBvc2l0aXZlKVxuc3VtKGRpYWJldGVzICYgTkREKVxuYGBgIn0= -->
+<pre class="r"><code>diabetes &lt;- apply(WHI.filtered[, c(&quot;DIAB&quot;, &quot;F134DIAB&quot;)], 1, positive)
+NDD &lt;- apply(WHI.filtered[, c('F134PARKINS', 'ALZHEIM_3', 'MS_3', 'PARKINS_3', 'ALS_3', 'ALZHEIM_4', 'MS_4', 'PARKINS_4', 'ALS_4', 'ALZHEIM_5', 'MS_5', 'PARKINS_5', 'ALS_5', 'ALZHEIM_6', 'MS_6', 'PARKINS_6', 'ALS_6', 'ALZHEIM_7', 'MS_7', 'PARKINS_7', 'ALS_7')], 1, positive)
+MS &lt;- apply(WHI.filtered[, c('MS_3', 'MS_4', 'MS_5', 'MS_6', 'MS_7')], 1, positive)
+ALS &lt;- apply(WHI.filtered[, c('ALS_3', 'ALS_4', 'ALS_5', 'ALS_6', 'ALS_7')], 1, positive)
+PARKINS &lt;- apply(WHI.filtered[, c('F134PARKINS', 'PARKINS_3', 'PARKINS_4', 'PARKINS_5', 'PARKINS_6', 'PARKINS_7')], 1, positive)
+ALZHEIM &lt;- apply(WHI.filtered[, c('ALZHEIM_4', 'ALZHEIM_5', 'ALZHEIM_6', 'ALZHEIM_7')], 1, positive)
+sum(diabetes &amp; NDD)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDMwNlxuIn0= -->
+<pre><code>[1] 306</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtKGRpYWJldGVzICYgTVMpXG5gYGAifQ== -->
+<pre class="r"><code>sum(diabetes &amp; MS)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDg3XG4ifQ== -->
+<pre><code>[1] 87</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtKGRpYWJldGVzICYgQUxTKVxuYGBgIn0= -->
+<pre class="r"><code>sum(diabetes &amp; ALS)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDY2XG4ifQ== -->
+<pre><code>[1] 66</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtKGRpYWJldGVzICYgQUxaSEVJTSlcbmBgYCJ9 -->
+<pre class="r"><code>sum(diabetes &amp; ALZHEIM)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDEwMVxuIn0= -->
+<pre><code>[1] 101</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtKGRpYWJldGVzICYgUEFSS0lOUylcbmBgYCJ9 -->
+<pre class="r"><code>sum(diabetes &amp; PARKINS)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDIwOFxuIn0= -->
+<pre><code>[1] 208</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtKE1TKVxuYGBgIn0= -->
+<pre class="r"><code>sum(MS)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDYwMlxuIn0= -->
+<pre><code>[1] 602</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtKEFMWkhFSU0pXG5gYGAifQ== -->
+<pre class="r"><code>sum(ALZHEIM)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDkwN1xuIn0= -->
+<pre><code>[1] 907</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtKEFMUylcbmBgYCJ9 -->
+<pre class="r"><code>sum(ALS)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDQzNlxuIn0= -->
+<pre><code>[1] 436</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtKFBBUktJTlMpXG5gYGAifQ== -->
+<pre class="r"><code>sum(PARKINS)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDE0MThcbiJ9 -->
+<pre><code>[1] 1418</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 </div>
 <div id="estimate-the-time-to-parkisons-disease-using-mixed-model" class="section level2">
 <h2>Estimate the time to parkison’s disease using mixed model</h2>
@@ -286,11 +355,13 @@ The following object is masked from ‘package:nlme’:
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+<p>The baseline to correct for: Race, Education, Cigarette Smoking, BMI, Hypertension, prior cardiovascular disease (myocardial infarction, angina, percutaneous transluminal coronary angioplasty, coronary bypass grafting or stroke), hormone therapy assignment, hormone therapy placebo</p>
+<p>distribution of risk factors for neurodegenerative disease by diabetes at the time of WHI enrollment</p>
 <!-- rnb-text-end -->
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKIyBBc3NvY2lhdGlvbiBiZXR3ZWVuIGRpYWJldGVzIGFuZCBuZXVyb2RlZ2VuZXJhdGlvbgoKIyMgRG9lcyBkaWFiZXRlcyBhZmZlY3QgdGhlIHRpbWUgaXQgdGFrZXMgdG8gZGV2ZWxvcCBuZXVyb2RlZ2VuZXJhdGl2ZSBkaXNlYXNlcz8KCkluIG9yZGVyIHRvIGFuc3dlciB0aGlzIHF1ZXN0aW9uLCB3ZSBuZWVkIHRvIGZpbmQgdGhlIHBhdGllbnRzIGFuc3dlcmVkIHllcyBpbiB0aGUgcXVlc3Rpb24gaWYgdGhleSBldmVyIGhhdmUgZGlhYmV0ZXMuIAoKYGBge3J9CmxpYnJhcnkoZHBseXIpCmxpYnJhcnkoZ2dwbG90MikKcmVhZERhdEZpbGUgPC0gZnVuY3Rpb24ocGF0aCkgewogIHJlYWQuY3N2KHBhdGgsIHN0cmluZ3NBc0ZhY3RvcnMgPSBGLCBoZWFkZXIgPSBULCBzZXA9J1x0JykKfQpXSEkuZjEzNCA8LSByZWFkRGF0RmlsZSgnZGF0YS9XSEkvTWVkaWNhbCBIaXN0b3J5L2YxMzRfY3Rvc19pbnYvZjEzNF9jdG9zX2ludi5kYXQnKQpgYGAKYGBge3J9CnByaW50KHN1bShXSEkuZjEzNCRGMTM0RElBQiwgbmEucm09VCkpCnByaW50KHN1bShXSEkuZjEzNCRGMTM0UEFSS0lOUywgbmEucm09VCkpCmBgYAoKVGhlcmUgYXJlIGluIHRvdGFsIDEzODQwIHBhcnRpY2lwYW50cyB3aG8gYW5zd2VyZWQgeWVzLiBUaGVyZSBpcyBhbHNvIGEgUGFya2lzb25zIGRpc2Vhc2UgY29sdW1uLCBhbmQgdGhlcmUgYXJlIDEyNjAgaW5kaXZpZHVhbHMgYW5zd2VyZWQgeWVzLgoKTm93IHRha2UgYSBsb29rIGF0IGFsbCB0aGUgaW5kaXZpZHVhbHMgaW4gdGhlIG9ic2VydmF0aW9uIHN0dWR5IGZvbGxvdyB1cCBzdXJ2ZXksIGFuZCBjb2xsZWN0IHRoZSBuZXVyb2RlZ2VuZXJhdGlvbiBhbmQgbWFjdWxhciBkZWdlbmVyYXRpb24gdmFyaWFibGVzCgpgYGB7cn0KV0hJLmJhc2VsaW5lIDwtIHJlYWREYXRGaWxlKCdkYXRhL1dISS9NZWRpY2FsIEhpc3RvcnkvZjMwX2N0b3NfaW52L2YzMF9jdG9zX2ludi5kYXQnKQpXSEkub3MzIDwtIHJlYWREYXRGaWxlKCdkYXRhL1dISS9PUyBGb2xsb3d1cC9mMTQzX2F2M19vc19pbnYvZjE0M19hdjNfb3NfaW52LmRhdCcpCldISS5vczQgPC0gcmVhZERhdEZpbGUoJ2RhdGEvV0hJL09TIEZvbGxvd3VwL2YxNDRfYXY0X29zX2ludi9mMTQ0X2F2NF9vc19pbnYuZGF0JykKV0hJLm9zNSA8LSByZWFkRGF0RmlsZSgnZGF0YS9XSEkvT1MgRm9sbG93dXAvZjE0NV9hdjVfb3NfaW52L2YxNDVfYXY1X29zX2ludi5kYXQnKQpXSEkub3M2IDwtIHJlYWREYXRGaWxlKCdkYXRhL1dISS9PUyBGb2xsb3d1cC9mMTQ2X2F2Nl9vc19pbnYvZjE0Nl9hdjZfb3NfaW52LmRhdCcpCldISS5vczcgPC0gcmVhZERhdEZpbGUoJ2RhdGEvV0hJL09TIEZvbGxvd3VwL2YxNDdfYXY3X29zX2ludi9mMTQ3X2F2N19vc19pbnYuZGF0JykKV0hJLmJhc2VsaW5lMiA8LSByZWFkRGF0RmlsZSgnZGF0YS9XSEkvRGVtb2dyYXBoaWNzL2YyX2N0b3NfaW52L2YyX2N0b3NfaW52LmRhdCcpCmBgYAoKCk5vdyBqb2luIHRoZSBmb2xsb3d1cCBkYXRhIHdpdGggc2VsZWN0ZWQgY29sdW1uIHdpdGggdGhlIG1haW4gV0hJIGYxMzQgZGF0YSAobGVmdCBqb2luKS4KCmBgYHtyfQpXSEkubWVyZ2VkIDwtIFdISS5iYXNlbGluZTJbLCBjKCdJRCcsICdBR0UnLCAnRjJEQVlTJywgJ0RJQUInLCAnRElBQkFHRScsICdESUFCQ09NQScsICdEQkRJRVRGMicsICdJTlNVTElOJywgJ0lOU1VMSU5XJywgJ0RJQUJQSUxMJywgJ0RJQUJOVycpXSAlPiUKICBmaWx0ZXIoIWlzLm5hKERJQUIpKSAlPiUKICBsZWZ0X2pvaW4oV0hJLmYxMzRbLCBjKCdJRCcsICdGMTM0REFZUycsICdGMTM0UEFSS0lOUycsICdGMTM0RElBQicpXSkgJT4lCiAgbGVmdF9qb2luKFdISS5iYXNlbGluZVssYygnSUQnLCAnRjMwREFZUycsICdBTFpIRUlNJywgJ01TJywgJ1BBUktJTlMnLCAnQUxTJywgJ0dMQVVDT01BJyldKSAlPiUKICBsZWZ0X2pvaW4oV0hJLm9zM1ssYygnSUQnLCAnRjE0M0RBWVMnLCAnTUFDREVHTlJfMycsICdBTFpIRUlNXzMnLCAnTVNfMycsICdQQVJLSU5TXzMnLCAnQUxTXzMnKV0pICU+JQogIGxlZnRfam9pbihXSEkub3M0WyxjKCdJRCcsICdGMTQ0REFZUycsICdNQUNERUdOUl80JywgJ0FMWkhFSU1fNCcsICdNU180JywgJ1BBUktJTlNfNCcsICdBTFNfNCcpXSkgJT4lCiAgbGVmdF9qb2luKFdISS5vczVbLGMoJ0lEJywgJ0YxNDVEQVlTJywgJ01BQ0RFR05SXzUnLCAnQUxaSEVJTV81JywgJ01TXzUnLCAnUEFSS0lOU181JywgJ0FMU181JyldKSAlPiUKICBsZWZ0X2pvaW4oV0hJLm9zNlssYygnSUQnLCAnRjE0NkRBWVMnLCAnTUFDREVHTlJfNicsICdBTFpIRUlNXzYnLCAnTVNfNicsICdQQVJLSU5TXzYnLCAnQUxTXzYnKV0pICU+JQogIGxlZnRfam9pbihXSEkub3M3WyxjKCdJRCcsICdGMTQ3REFZUycsICdNQUNERUdOUl83JywgJ0FMWkhFSU1fNycsICdNU183JywgJ1BBUktJTlNfNycsICdBTFNfNycpXSkgCmBgYAoKCk5vdyByZW1vdmUgdGhvc2UgdGhhdCBjb21wbGV0ZWx5IGhhdmUgbm8gZm9sbG93dXAuCgpgYGB7cn0Kbm9kYXRhLmlkeCA8LSBhcHBseShXSEkubWVyZ2VkLCAxLCBmdW5jdGlvbih4KSB7CiAgc3VtKGlzLm5hKHhbc2VxKDIwLCA0OSldKSkgPT0gMzAKfSkKV0hJLmZpbHRlcmVkIDwtIFdISS5tZXJnZWRbIW5vZGF0YS5pZHgsXQpgYGAKCkFmdGVyIHJlbW92aW5nIHRob3NlIHRoYXQgaGF2ZSBhYnNvbHV0ZWx5IG5vIGZvbGxvd3VwLCBvbmx5IGhhbGYgb2YgdGhlIG9yaWdpbmFsIHBvcHVsYXRpb24gaXMgbGVmdC4gVGhlcmUgYXJlIDYyNTkwIHBlb3BsZSBpbiB0aGUgZGF0YXNldC4KCiMjIEVzdGltYXRlIHRoZSB0aW1lIHRvIHBhcmtpc29uJ3MgZGlzZWFzZSB1c2luZyBtaXhlZCBtb2RlbAoKVXNlIGBubG1lYCBmb3Igbm9ubGluZWFyIG1peGVkIGVmZmVjdCBtb2RlbAoKYGBge3J9CmxpYnJhcnkobG1lNCkKCmBgYAoKCgo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKIyBBc3NvY2lhdGlvbiBiZXR3ZWVuIGRpYWJldGVzIGFuZCBuZXVyb2RlZ2VuZXJhdGlvbgoKIyMgRG9lcyBkaWFiZXRlcyBhZmZlY3QgdGhlIHRpbWUgaXQgdGFrZXMgdG8gZGV2ZWxvcCBuZXVyb2RlZ2VuZXJhdGl2ZSBkaXNlYXNlcz8KCkluIG9yZGVyIHRvIGFuc3dlciB0aGlzIHF1ZXN0aW9uLCB3ZSBuZWVkIHRvIGZpbmQgdGhlIHBhdGllbnRzIGFuc3dlcmVkIHllcyBpbiB0aGUgcXVlc3Rpb24gaWYgdGhleSBldmVyIGhhdmUgZGlhYmV0ZXMuIAoKYGBge3J9CmxpYnJhcnkoZHBseXIpCmxpYnJhcnkoZ2dwbG90MikKcmVhZERhdEZpbGUgPC0gZnVuY3Rpb24ocGF0aCkgewogIHJlYWQuY3N2KHBhdGgsIHN0cmluZ3NBc0ZhY3RvcnMgPSBGLCBoZWFkZXIgPSBULCBzZXA9J1x0JykKfQpXSEkuZjEzNCA8LSByZWFkRGF0RmlsZSgnZGF0YS9XSEkvTWVkaWNhbCBIaXN0b3J5L2YxMzRfY3Rvc19pbnYvZjEzNF9jdG9zX2ludi5kYXQnKQpgYGAKYGBge3J9CnByaW50KHN1bShXSEkuZjEzNCRGMTM0RElBQiwgbmEucm09VCkpCnByaW50KHN1bShXSEkuZjEzNCRGMTM0UEFSS0lOUywgbmEucm09VCkpCmBgYAoKVGhlcmUgYXJlIGluIHRvdGFsIDEzODQwIHBhcnRpY2lwYW50cyB3aG8gYW5zd2VyZWQgeWVzLiBUaGVyZSBpcyBhbHNvIGEgUGFya2lzb25zIGRpc2Vhc2UgY29sdW1uLCBhbmQgdGhlcmUgYXJlIDEyNjAgaW5kaXZpZHVhbHMgYW5zd2VyZWQgeWVzLgoKTm93IHRha2UgYSBsb29rIGF0IGFsbCB0aGUgaW5kaXZpZHVhbHMgaW4gdGhlIG9ic2VydmF0aW9uIHN0dWR5IGZvbGxvdyB1cCBzdXJ2ZXksIGFuZCBjb2xsZWN0IHRoZSBuZXVyb2RlZ2VuZXJhdGlvbiBhbmQgbWFjdWxhciBkZWdlbmVyYXRpb24gdmFyaWFibGVzCgpgYGB7cn0KV0hJLmJhc2VsaW5lIDwtIHJlYWREYXRGaWxlKCdkYXRhL1dISS9NZWRpY2FsIEhpc3RvcnkvZjMwX2N0b3NfaW52L2YzMF9jdG9zX2ludi5kYXQnKQpXSEkub3MzIDwtIHJlYWREYXRGaWxlKCdkYXRhL1dISS9PUyBGb2xsb3d1cC9mMTQzX2F2M19vc19pbnYvZjE0M19hdjNfb3NfaW52LmRhdCcpCldISS5vczQgPC0gcmVhZERhdEZpbGUoJ2RhdGEvV0hJL09TIEZvbGxvd3VwL2YxNDRfYXY0X29zX2ludi9mMTQ0X2F2NF9vc19pbnYuZGF0JykKV0hJLm9zNSA8LSByZWFkRGF0RmlsZSgnZGF0YS9XSEkvT1MgRm9sbG93dXAvZjE0NV9hdjVfb3NfaW52L2YxNDVfYXY1X29zX2ludi5kYXQnKQpXSEkub3M2IDwtIHJlYWREYXRGaWxlKCdkYXRhL1dISS9PUyBGb2xsb3d1cC9mMTQ2X2F2Nl9vc19pbnYvZjE0Nl9hdjZfb3NfaW52LmRhdCcpCldISS5vczcgPC0gcmVhZERhdEZpbGUoJ2RhdGEvV0hJL09TIEZvbGxvd3VwL2YxNDdfYXY3X29zX2ludi9mMTQ3X2F2N19vc19pbnYuZGF0JykKV0hJLmJhc2VsaW5lMiA8LSByZWFkRGF0RmlsZSgnZGF0YS9XSEkvRGVtb2dyYXBoaWNzL2YyX2N0b3NfaW52L2YyX2N0b3NfaW52LmRhdCcpCldISS5iYXNlbGluZTMgPC0gcmVhZERhdEZpbGUoJ2RhdGEvV0hJL0RlbW9ncmFwaGljcy9kZW1fY3Rvc19pbnYvZGVtX2N0b3NfaW52LmRhdCcpCnBlcnNvbmFsSW5mbyA8LSByZWFkRGF0RmlsZSgnZGF0YS9XSEkvRGVtb2dyYXBoaWNzL2YyMF9jdG9zX2ludi9mMjBfY3Rvc19pbnYuZGF0JykKYGBgCgoKTm93IGpvaW4gdGhlIGZvbGxvd3VwIGRhdGEgd2l0aCBzZWxlY3RlZCBjb2x1bW4gd2l0aCB0aGUgbWFpbiBXSEkgZjEzNCBkYXRhIChsZWZ0IGpvaW4pLgoKYGBge3J9CldISS5tZXJnZWQgPC0gV0hJLmJhc2VsaW5lMlssIGMoJ0lEJywgJ1JBQ0UnLCAnRjJEQVlTJywgJ0RJQUInLCAnRElBQkFHRScsICdESUFCQ09NQScsICdEQkRJRVRGMicsICdJTlNVTElOJywgJ0lOU1VMSU5XJywgJ0RJQUJQSUxMJywgJ0RJQUJOVycpXSAlPiUKICBmaWx0ZXIoIWlzLm5hKERJQUIpKSAlPiUKICBsZWZ0X2pvaW4oV0hJLmYxMzRbLCBjKCdJRCcsICdGMTM0REFZUycsICdGMTM0UEFSS0lOUycsICdGMTM0RElBQicpXSkgJT4lCiAgbGVmdF9qb2luKFdISS5iYXNlbGluZVssYygnSUQnLCAnRjMwREFZUycsICdBTFpIRUlNJywgJ01TJywgJ1BBUktJTlMnLCAnQUxTJywgJ0dMQVVDT01BJyldKSAlPiUKICBsZWZ0X2pvaW4oV0hJLm9zM1ssYygnSUQnLCAnRjE0M0RBWVMnLCAnTUFDREVHTlJfMycsICdBTFpIRUlNXzMnLCAnTVNfMycsICdQQVJLSU5TXzMnLCAnQUxTXzMnKV0pICU+JQogIGxlZnRfam9pbihXSEkub3M0WyxjKCdJRCcsICdGMTQ0REFZUycsICdNQUNERUdOUl80JywgJ0FMWkhFSU1fNCcsICdNU180JywgJ1BBUktJTlNfNCcsICdBTFNfNCcpXSkgJT4lCiAgbGVmdF9qb2luKFdISS5vczVbLGMoJ0lEJywgJ0YxNDVEQVlTJywgJ01BQ0RFR05SXzUnLCAnQUxaSEVJTV81JywgJ01TXzUnLCAnUEFSS0lOU181JywgJ0FMU181JyldKSAlPiUKICBsZWZ0X2pvaW4oV0hJLm9zNlssYygnSUQnLCAnRjE0NkRBWVMnLCAnTUFDREVHTlJfNicsICdBTFpIRUlNXzYnLCAnTVNfNicsICdQQVJLSU5TXzYnLCAnQUxTXzYnKV0pICU+JQogIGxlZnRfam9pbihXSEkub3M3WyxjKCdJRCcsICdGMTQ3REFZUycsICdNQUNERUdOUl83JywgJ0FMWkhFSU1fNycsICdNU183JywgJ1BBUktJTlNfNycsICdBTFNfNycpXSkgJT4lCiAgbGVmdF9qb2luKFdISS5iYXNlbGluZTNbLCBjKCJJRCIsICJBR0UiKV0pICU+JQogIGxlZnRfam9pbihwZXJzb25hbEluZm9bLGMoIklEIiwgIkVEVUMiKV0pCgpwb3NpdGl2ZSA8LSBmdW5jdGlvbih4KSB7CiAgc3VtKHgsIG5hLnJtPVQpID4gMAp9CmBgYAoKCk5vdyByZW1vdmUgdGhvc2UgdGhhdCBjb21wbGV0ZWx5IGhhdmUgbm8gZm9sbG93dXAuCgpgYGB7cn0Kbm9kYXRhLmlkeCA8LSBhcHBseShXSEkubWVyZ2VkLCAxLCBmdW5jdGlvbih4KSB7CiAgc3VtKGlzLm5hKHhbc2VxKDIxLCA1MCldKSkgPT0gMzAKfSkKV0hJLmZpbHRlcmVkIDwtIFdISS5tZXJnZWRbIW5vZGF0YS5pZHgsXQpgYGAKCgpBZnRlciByZW1vdmluZyB0aG9zZSB0aGF0IGhhdmUgYWJzb2x1dGVseSBubyBmb2xsb3d1cCwgb25seSBoYWxmIG9mIHRoZSBvcmlnaW5hbCBwb3B1bGF0aW9uIGlzIGxlZnQuIFRoZXJlIGFyZSA2MjU5MCBwZW9wbGUgaW4gdGhlIGRhdGFzZXQuCgpgYGB7cn0KZGlhYmV0ZXMgPC0gYXBwbHkoV0hJLmZpbHRlcmVkWywgYygiRElBQiIsICJGMTM0RElBQiIpXSwgMSwgcG9zaXRpdmUpCk5ERCA8LSBhcHBseShXSEkuZmlsdGVyZWRbLCBjKCdGMTM0UEFSS0lOUycsICdBTFpIRUlNXzMnLCAnTVNfMycsICdQQVJLSU5TXzMnLCAnQUxTXzMnLCAnQUxaSEVJTV80JywgJ01TXzQnLCAnUEFSS0lOU180JywgJ0FMU180JywgJ0FMWkhFSU1fNScsICdNU181JywgJ1BBUktJTlNfNScsICdBTFNfNScsICdBTFpIRUlNXzYnLCAnTVNfNicsICdQQVJLSU5TXzYnLCAnQUxTXzYnLCAnQUxaSEVJTV83JywgJ01TXzcnLCAnUEFSS0lOU183JywgJ0FMU183JyldLCAxLCBwb3NpdGl2ZSkKTVMgPC0gYXBwbHkoV0hJLmZpbHRlcmVkWywgYygnTVNfMycsICdNU180JywgJ01TXzUnLCAnTVNfNicsICdNU183JyldLCAxLCBwb3NpdGl2ZSkKQUxTIDwtIGFwcGx5KFdISS5maWx0ZXJlZFssIGMoJ0FMU18zJywgJ0FMU180JywgJ0FMU181JywgJ0FMU182JywgJ0FMU183JyldLCAxLCBwb3NpdGl2ZSkKUEFSS0lOUyA8LSBhcHBseShXSEkuZmlsdGVyZWRbLCBjKCdGMTM0UEFSS0lOUycsICdQQVJLSU5TXzMnLCAnUEFSS0lOU180JywgJ1BBUktJTlNfNScsICdQQVJLSU5TXzYnLCAnUEFSS0lOU183JyldLCAxLCBwb3NpdGl2ZSkKQUxaSEVJTSA8LSBhcHBseShXSEkuZmlsdGVyZWRbLCBjKCdBTFpIRUlNXzQnLCAnQUxaSEVJTV81JywgJ0FMWkhFSU1fNicsICdBTFpIRUlNXzcnKV0sIDEsIHBvc2l0aXZlKQpzdW0oZGlhYmV0ZXMgJiBOREQpCnN1bShkaWFiZXRlcyAmIE1TKQpzdW0oZGlhYmV0ZXMgJiBBTFMpCnN1bShkaWFiZXRlcyAmIEFMWkhFSU0pCnN1bShkaWFiZXRlcyAmIFBBUktJTlMpCnN1bShNUykKc3VtKEFMWkhFSU0pCnN1bShBTFMpCnN1bShQQVJLSU5TKQpgYGAKCgojIyBFc3RpbWF0ZSB0aGUgdGltZSB0byBwYXJraXNvbidzIGRpc2Vhc2UgdXNpbmcgbWl4ZWQgbW9kZWwKClVzZSBgbmxtZWAgZm9yIG5vbmxpbmVhciBtaXhlZCBlZmZlY3QgbW9kZWwKCmBgYHtyfQpsaWJyYXJ5KGxtZTQpCgpgYGAKCgpUaGUgYmFzZWxpbmUgdG8gY29ycmVjdCBmb3I6ClJhY2UsIEVkdWNhdGlvbiwgQ2lnYXJldHRlIFNtb2tpbmcsIEJNSSwgSHlwZXJ0ZW5zaW9uLCBwcmlvciBjYXJkaW92YXNjdWxhciBkaXNlYXNlIChteW9jYXJkaWFsIGluZmFyY3Rpb24sIGFuZ2luYSwgcGVyY3V0YW5lb3VzIHRyYW5zbHVtaW5hbCBjb3JvbmFyeSBhbmdpb3BsYXN0eSwgY29yb25hcnkgYnlwYXNzIGdyYWZ0aW5nIG9yIHN0cm9rZSksIGhvcm1vbmUgdGhlcmFweSBhc3NpZ25tZW50LCBob3Jtb25lIHRoZXJhcHkgcGxhY2VibwoKZGlzdHJpYnV0aW9uIG9mIHJpc2sgZmFjdG9ycyBmb3IgbmV1cm9kZWdlbmVyYXRpdmUgZGlzZWFzZSBieSBkaWFiZXRlcyBhdCB0aGUgdGltZSBvZiBXSEkgZW5yb2xsbWVudAoKCg==</div>
 
 
 
