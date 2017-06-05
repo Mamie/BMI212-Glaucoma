@@ -8,7 +8,8 @@ library(foreach)
 library(doParallel)
 
 
-data.all <- read.csv('NDDPSM2.csv', stringsAsFactors=F)
+# Scaled data generated from aim1.R
+data.all <- read.csv('NDDPSM.csv', stringsAsFactors=F)
 
 responses <- c('ALZHEIM', 'PARKINS', 'ALS', 'MS')
 

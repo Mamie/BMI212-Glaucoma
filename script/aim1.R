@@ -8,7 +8,7 @@ library(dplyr)
 matched <- read.csv('PSMmatched.csv', stringsAsFactors=F)
 data.all <- read.csv('WHImerged.csv', stringsAsFactors=F)
 
-# create the data matrix for specific aim 1
+# create the data matrix for specific aims 1 + 2
 data.all <- data.all %>%
   mutate(AGE=AGE*365+date) %>%
   filter(ID %in% unlist(matched))
