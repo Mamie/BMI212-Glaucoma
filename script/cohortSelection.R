@@ -24,7 +24,21 @@ library(data.table)
 
 # Helper function to read the WHI .dat file
 readDatFile <- function(path) {
-  read.csv(path, stringsAsFactors = F, header = T, sep='\t')
+  if (file.exists(path)) {
+    return(read.csv(path, stringsAsFactors=F, header=T, sep='\t'))
+  } else {
+    inside <- c()
+  	outside <- path
+    while (outside != "") {
+	  inside <- c(basename(outside), inside)
+      outside <- dirname(outside)
+	  outside.zip <- paste0(outside, ".zip")
+	  if (file.exists(outside.zip)) {
+        return(read.csv(unz(outside.zip, filename=paste0(inside, collapse='')),
+						stringsAsFactors=F, header=T, sep='\t'))
+	  }
+	}
+  }
 }
 # construct OS followup year 1 and 2 from the response of followup year 3
 decodeStatus <- function(x) {
