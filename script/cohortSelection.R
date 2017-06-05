@@ -1,3 +1,6 @@
+# Authors:
+#  Mamie Wang
+
 library(dplyr)
 library(ggplot2)
 library(tidyr)

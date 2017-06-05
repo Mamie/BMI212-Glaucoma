@@ -1,3 +1,7 @@
+# Authors:
+#  Mamie Wang
+#  Masood Malekghassemi (minor bugfix)
+
 library(dplyr)
 library(ggplot2)
 library(MatchIt)
@@ -11,6 +15,9 @@ data.ps <- data.all %>%
   summarize(AGE = min(AGE)) %>%
   na.omit() %>%
   unique()
+# Normalize the construction of data.ps to avoid MatchIt/dplyr interaction bugs
+# further down the line.
+data.ps <- data.frame(data.ps)
 
 # Visualization of the pre-matching propensity score distribution
 ps.fit <- glm(diab ~ BMI * AGE + as.factor(RACE) * BMI,
@@ -29,7 +36,8 @@ fig1
 
 # Propensity score matching using nearest neighnor method
 mod_match <- matchit(diab ~ BMI*AGE + as.factor(RACE)*BMI,
-                     method = "nearest", data = data.ps)
+                     method = "nearest",
+					 data = data.ps)
 print(summary(mod_match)) 
 # Sample sizes:
 # Control Treated
@@ -38,8 +46,6 @@ print(summary(mod_match))
 # Unmatched   69669       0
 # Discarded       0       0
 
-# save the environment and restart to run this command if it gives the error
-# of cannot convert the object to data frame
 data.matched <- match.data(mod_match)
 matched <- data.matched$ID
 write.table(matched, file='PSMmatched.csv', sep=',', row.names=F, col.names=T,
