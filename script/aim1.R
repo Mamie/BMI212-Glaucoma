@@ -1,6 +1,10 @@
+# BMI 212 Glaucoma 
+# Mamie Wang
+# Specific aim 1: association between different NDDs and diabetes
+
 library(lme4)
 library(dplyr)
-# specific aim 1
+
 matched <- read.csv('PSMmatched.csv', stringsAsFactors=F)
 data.all <- read.csv('WHImerged.csv', stringsAsFactors=F)
 
