@@ -2,61 +2,38 @@
 # Mamie Wang
 # specific aim 2: association between different NDDs and diabetes
 
-library(lme4)
 library(dplyr)
+library(lme4)
+library(foreach)
+library(doParallel)
 
 
 data.all <- read.csv('NDDPSM2.csv', stringsAsFactors=F)
 
+responses <- c('ALZHEIM', 'PARKINS', 'ALS', 'MS')
 
-# full model
-alz.full <- glmer(formula = ALZHEIM ~ AGE + diab + BMI + RACE + diab:AGE + (1 | ID), 
-                  data=data.all, na.action=na.omit, 
-                  family=binomial(link = "logit"), verbose=1)
-summary(alz.full)
+# Full model
+formula_rhs <- 'AGE + diab + BMI + RACE + diab:AGE + (1 | ID)'
+# Baseline model
+#formula_rhs <- 'AGE + diab + RACE + diab:AGE + (1 | ID)'
 
+# Parallelism prelude
+cores <- detectCores()
+cluster <- makeCluster(cores[1] - 1)
+registerDoParallel(cluster)
 
-parkins.full <- glmer(formula = PARKINS ~ AGE + diab + BMI + RACE + diab:AGE + (1 | ID), 
-                      data=data.all, na.action=na.omit, 
-                      family=binomial(link = "logit"), verbose=1)
-summary(parkins.full)
+model_results <- foreach(response=responses) %dopar% {
+	library(lme4)
+	formula = as.formula(paste(response, '~', formula_rhs))
+	model <- glmer(formula=formula, data=data.all, na.action=na.omit, family=binomial(link="logit"), verbose=1)
+	model
+}
+names(model_results) <- responses
+for (model in model_results) {
+	summary(model)
+}
+save(model_results, file='specificAim2.RData')
 
-als.full <- glmer(formula = ALS ~ AGE + diab + BMI + RACE + diab:AGE + (1 | ID), 
-                  data=data.all, na.action=na.omit, 
-                  family=binomial(link = "logit"), verbose=1)
-summary(als.full)
+# Parallelism epilogue
+stopCluster(cluster)
 
-ms.full <- glmer(formula = MS ~ AGE + diab + BMI + RACE + diab:AGE + (1 | ID), 
-                 data=data.all, na.action=na.omit, 
-                 family=binomial(link = "logit"), verbose=1)
-summary(ms.full)
-
-
-save(alz.full, parkins.full, als.full, ms.full, file='specificAim2.RData')
-
-
-# baseline models
-#alz.baseline <- glmer(formula = ALZHEIM ~ AGE + diab + RACE + diab:AGE + (1 | ID), 
-#                      data=data.all, na.action=na.omit,
-#                      family=binomial(link = "logit"), verbose=1)
-#summary(alz.baseline)
-
-
-#parkins.baseline <- glmer(formula = PARKINS ~ AGE + diab + RACE + diab:AGE + (1 | ID), 
-#                          data=data.all, na.action=na.omit,
-#                          family=binomial(link = "logit"), verbose=1)
-#summary(parkins.baseline)
-
-
-#als.baseline <- glmer(formula = ALS ~ AGE + diab + RACE + diab:AGE + (1 | ID), 
-#                      data=data.all, na.action=na.omit,
-#                      family=binomial(link = "logit"), verbose=1)
-#summary(als.baseline)
-
-
-#ms.baseline <- glmer(formula = MS ~ AGE + diab + RACE + diab:AGE + (1 | ID), 
-#                     data=data.all, na.action=na.omit,
-#                     family=binomial(link = "logit"), verbose=1)
-#summary(ms.baseline)
-
-#save(alz.baseline, parkins.baseline, als.baseline, ms.baseline, file='specificAim2.RData')
