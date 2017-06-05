@@ -1,3 +1,7 @@
+# Authors:
+#  Mamie Wang
+#  Masood Malekghassemi (minor bugfix)
+
 library(dplyr)
 library(ggplot2)
 library(MatchIt)
