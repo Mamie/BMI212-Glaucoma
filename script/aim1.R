@@ -22,12 +22,12 @@ write.table(data.all, file='NDDPSM.csv', sep=',', row.names=F, col.names=T, quot
 # Full model (does not converge)
 #formula_rhs <- 'AGE + diab + BMI + RACE + diab:AGE + (1 | ID)'
 # Baseline model
-formula_rhs <- 'AGE + diab + RACE + diab:AGE + (1 | ID)'
+formula_rhs <- 'AGE + diab + RACE + BMI + diab:AGE + (1 | ID)'
 
 formula <- as.formula(paste('NDD ~', formula_rhs))
 model.aim1 <- glmer(formula=formula, 
-                        data=data.all, na.action=na.omit,
-                        family=binomial(link = "logit"), verbose=1)
+                    data=data.all, na.action=na.omit,
+                    family=binomial(link = "logit"), verbose=1)
 summary(model.aim1)
 save(model.aim1, file='specificAim1.RData')
 

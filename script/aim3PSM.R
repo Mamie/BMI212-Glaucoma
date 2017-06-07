@@ -6,7 +6,7 @@ library(dplyr)
 library(ggplot2)
 library(MatchIt)
 
-data <- read.csv('cohortDrug.csv', stringsAsFactors=F)
+data <- read.csv('data/cohortDrug.csv', stringsAsFactors=F)
 data.diabetes <- data %>%
   filter(DIAB==1 | F134DIAB==1) %>%
   mutate(treated=(F44INSULIN+F44SULFONYLUREA+F44DPHENYLDERIV+F44BIGUANIDES+F44OTHERDIAB+F44THIAZO>1)) %>%
@@ -20,8 +20,11 @@ sum(data.diabetes$treated==1) # 1133
 ps.fit <- glm(treated ~ BMI * AGE + as.factor(RACE) * BMI,
               data=data.diabetes, family=binomial(link='logit'))
 pscores <- predict(ps.fit, type='link')
-ps_df <- data.frame(pscores=pscores,
+ps_df <- data.frame(ID=data.diabetes$ID,
+                    pscores=pscores,
                     treated=data.diabetes$treated)
+ps_df <- ps_df %>%
+  mutate(weight=ifelse(treated==1, 1/pscores, 1/(1-pscores)))
 
 labs <- paste(c("Treated", "Not treated"))
 fig1 <- ps_df %>%
@@ -31,14 +34,16 @@ fig1 <- ps_df %>%
   xlab('propensity score') + theme_bw(base_size=20)
 fig1
 
+
 # Propensity score matching using nearest neighnor method
 mod_match <- matchit(treated ~ BMI*AGE + as.factor(RACE)*BMI,
-                     method = "nearest", data = data.diabetes)
+                     method = "nearest", data = data.frame(data.diabetes))
 print(summary(mod_match)) 
 
 # restart if not able to convert to data frame
 data.matched <- match.data(mod_match)
 matched <- data.matched$ID
+
 write.table(matched, file='aim3matchedID.csv', sep=',', row.names=F, col.names=T,
             quote=F)
 
