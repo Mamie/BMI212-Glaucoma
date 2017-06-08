@@ -1,6 +1,12 @@
+#!/usr/bin/env python
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib
+
+matplotlib.rc('font', family='serif', serif=['Computer Modern'])
+matplotlib.rc('text', usetex=True)
 
 def doplot(saveto, GLMM_OUT, SPECIAL=["diab"], DIMS=(10, 1)):
   lines = GLMM_OUT.split('\n')
@@ -16,21 +22,13 @@ def doplot(saveto, GLMM_OUT, SPECIAL=["diab"], DIMS=(10, 1)):
     stdevs.append(abs(float(line[2])))
   df = pd.DataFrame({'label': labels, 'est': estimates, 'stdev': stdevs,}).set_index('label')
   
-  # Bounds for 95% CI
-  df['lb'] = df['est'] - df['stdev'] * 1.96
-  df['ub'] = df['est'] + df['stdev'] * 1.96
-
-  df['abs_est'] = df['est']
-  df['abs_lb'] = df['lb']
-  df['abs_ub'] = df['ub']
-  for index, row in df.iterrows():
-    row['abs_est'] = abs(row['est'])
-    if row['lb'] < 0 and row['ub'] > 0:
-      row['abs_lb'] = 0
-      row['abs_ub'] = max(-row['lb'], row['ub'])
-    else:
-      row['abs_lb'] = min(abs(row['lb']), abs(row['ub']))
-      row['abs_ub'] = max(abs(row['lb']), abs(row['ub']))
+  # lower bound
+  df['lb'] = df['est'] - df['stdev']
+  df['ub'] = df['est'] + df['stdev']
+  df['lb_95'] = df['est'] - df['stdev']*1.96
+  df['ub_95'] = df['est'] + df['stdev']*1.96
+  df['lb_90'] = df['est'] - df['stdev']*1.645
+  df['ub_90'] = df['est'] + df['stdev']*1.645
   
   plot_df = df.sort_values('est', ascending=True)
   fig = plt.figure(figsize=DIMS)
@@ -51,14 +49,25 @@ def doplot(saveto, GLMM_OUT, SPECIAL=["diab"], DIMS=(10, 1)):
       'MarkerEdgeWidth': 2,
       'MarkerSize': 4,
     }
+    style_90 = {
+      'Marker': '+',
+      'Color': [0.2, 0.2, 0.2],
+      'MarkerEdgeColor': [0.2, 0.2, 0.2],
+      'MarkerEdgeWidth': 2,
+      'MarkerSize': 4,
+      'LineStyle': '',
+    }
     if index in SPECIAL:
       bstyle['LineWidth'] *= 2
       bstyle['Color'] = 'k'
       estyle['MarkerSize'] *= 3
       estyle['Color'] = 'k'
       estyle['MarkerEdgeColor'] = 'k'
-    ax.plot([row['lb'], row['ub']], [y, y], **bstyle)
+      style_90['MarkerSize'] *= 3
+      style_90['MarkerEdgeColor'] = 'k'
+    ax.plot([row['lb_95'], row['ub_95']], [y, y], **bstyle)
     ax.plot([row['est']], [y], **estyle)
+    ax.plot([row['lb_90'], row['ub_90']], [y, y], **style_90)
     y += 1
   ax.axvline(0, color='k')
   plt.yticks(range(plot_df.shape[0]))
@@ -68,40 +77,42 @@ def doplot(saveto, GLMM_OUT, SPECIAL=["diab"], DIMS=(10, 1)):
   plt.savefig(saveto, bbox_inches='tight')
 
 # Just copy-paste the output of the GLMM's merModel coeff matrix here to make plots 'n stuff.
-
-doplot('alzheim.png', """
-diab          3.2880     1.5568   2.112   0.0347 *  
-age           5.9184     0.5766  10.264   <2e-16 ***
-BMI           0.4437     0.5095   0.871   0.3838    
-diab:age     -1.4602     0.6825  -2.139   0.0324 *  
-diab:BMI      0.2514     0.6825   0.368   0.7126 
-""", ["diab"])
-doplot('parkinson.png', """
-age           2.6531     0.3455   7.679  1.6e-14 ***
-diab         -0.3667     0.9927  -0.369    0.712    
-race         -0.1168     0.2910  -0.401    0.688    
-age:diab      0.2613     0.4817   0.542    0.588
+doplot('aim1.png', """
+age				2.49	0.22	11.27	<2E-16
+diab			1.1		0.51	2.14	0.03
+BMI				0.27	0.18	1.49	1.40E-01
+age:diab	-0.64	0.28	-2.3	2.00E-02
 """)
-doplot('als.png', """
-age           0.7319     0.6357   1.151    0.250    
-diab          0.1198     1.2950   0.092    0.926    
-BMI          -0.2941     0.6626  -0.444    0.657    
-age:diab      0.2938     0.8519   0.345    0.730 
+doplot('aim2_alz.png', """
+age				5.43	0.62		8.74	<2E-16
+diab			2.95	1.59		1.86	0.06
+BMI				0.42	0.35		1.19	2.30E-01
+age:diab	-1.21	0.7079	-1.71	9.00E-02
 """)
-doplot('ms.png', """
-age          -0.6822     0.4228  -1.614    0.107    
-diab          0.3618     0.8617   0.420    0.675    
-age:diab     -0.1998     0.5440  -0.367    0.713
+doplot('aim2_parkins', """
+age				1.49	0.86	1.75	0.08
+diab			-0.62	0.98	-0.62	0.53
+BMI				0.33	0.31	1.07	2.90E-01
+age:diab	0.44	0.48	0.91	3.60E-01
 """)
-doplot('ndds.png', """
-age           2.2920     0.2109  10.865   <2e-16 ***
-diab          0.8568     0.4985   1.719   0.0857 .  
-age:diab     -0.5018     0.2726  -1.841   0.0656 .  
+doplot('aim2_als', """
+age				1.49	0.86	1.75	0.08
+diab			1.13	1.69	0.67	0.51
+BMI				-0.36	0.74	-0.48	6.30E-01
+age:diab	-0.44	1.02	-0.43	6.70E-01
 """)
-doplot('aim3.png', """
-age                   3.72087    0.58091   6.405  1.5e-10 ***
-biguanides           -4.43157    3.16283  -1.401   0.1612    
-sulfonylurea         -0.04499    2.28226  -0.020   0.9843    
-age:biguanides        2.53527    1.44463   1.755   0.0793 .  
-age:sulfonylurea      0.13612    1.06487   0.128   0.8983    
-""", ['biguanides', 'age:biguanides'], (8, 2))
+doplot('aim2_ms', """
+age				-0.44	0.38	-1.16	0.25
+diab			-0.02	0.8		-0.02	0.99	
+BMI				-0.02	0.35	-0.05	9.60E-01
+age:diab	-0.46	0.51	-0.9	3.70E-01
+""")
+doplot('aim3', """
+age                5.0360     0.4775  10.545  < 2e-16 ***
+biguanides        -5.5236     1.5391  -3.589 0.000332 ***
+insulin            0.4274     0.5391   0.793 0.427864    
+sulfonylureas     -3.6793     1.3856  -2.655 0.007920 ** 
+age:biguanides     2.5559     0.6389   4.001 6.32E-05 ***
+age:insulin       -0.2110     0.2565  -0.822 0.410810    
+age:sulfonylureas  1.6625     0.5762   2.885 0.003908
+""", SPECIAL=['biguanides', 'sulfonylureas'])
