@@ -1,3 +1,6 @@
+# BMI 212 Glucoma 
+#  Mamie Wang
+
 # Balance analysis before matching
 # The results show imbalance in the three variables in the dataset
 library(AER) 
