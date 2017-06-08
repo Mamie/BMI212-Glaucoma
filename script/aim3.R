@@ -15,8 +15,6 @@ data.model$F44SULFONYLUREA_MAXY <- as.numeric(scale(data.model$F44SULFONYLUREA_M
 data.model$NDD <- apply(cbind(data.model$ALZHEIM, data.model$PARKINS, data.model$ALS, data.model$MS), 
                         1, function(x) x[1] | x[2] | x[3] | x[4])
 
-data.model$weight <- plogis(data.model$weight, location=mean(data.model$weight), scale=1)
-
 formula <- ALZHEIM ~ AGE + F44BIGUANIDES_MAXY*AGE + F44INSULIN_MAXY*AGE + F44SULFONYLUREA_MAXY*AGE + F44BIGUANIDES_MAXY + F44INSULIN_MAXY + F44SULFONYLUREA_MAXY + (1 | ID)
 
 model.aim3 <- glmer(formula=formula,
