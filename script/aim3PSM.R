@@ -1,11 +1,10 @@
 # BMI 212 Glucoma 
 # Mamie Wang
+# Masood Malekghassemi (weight definition)
 # specific aim 3: effect of diabetic medication on NDD for diabetes patients
-
 library(dplyr)
 library(ggplot2)
 library(MatchIt)
-
 data <- read.csv('data/cohortDrug.csv', stringsAsFactors=F)
 data.diabetes <- data %>%
   filter(DIAB==1 | F134DIAB==1) %>%
@@ -14,36 +13,13 @@ data.diabetes <- data %>%
   group_by(ID, AGE, RACE, BMI) %>%
   summarize(treated=max(treated)) %>%
   na.omit()
-
 sum(data.diabetes$treated==1) # 1133
-
 ps.fit <- glm(treated ~ BMI * AGE + as.factor(RACE) * BMI,
               data=data.diabetes, family=binomial(link='logit'))
-pscores <- predict(ps.fit, type='link')
+pscores <- predict(ps.fit, type='response')
 ps_df <- data.frame(ID=data.diabetes$ID,
                     pscores=pscores,
                     treated=data.diabetes$treated)
 ps_df <- ps_df %>%
   mutate(weight=ifelse(treated==1, 1/pscores, 1/(1-pscores)))
-
-labs <- paste(c("Treated", "Not treated"))
-fig1 <- ps_df %>%
-  mutate(treated = ifelse(treated==1, labs[1], labs[2])) %>%
-  ggplot(aes(x = pscores, color=treated, fill=treated)) +
-  geom_density(alpha=0.4) +
-  xlab('propensity score') + theme_bw(base_size=20)
-fig1
-
-
-# Propensity score matching using nearest neighnor method
-mod_match <- matchit(treated ~ BMI*AGE + as.factor(RACE)*BMI,
-                     method = "nearest", data = data.frame(data.diabetes))
-print(summary(mod_match)) 
-
-# restart if not able to convert to data frame
-data.matched <- match.data(mod_match)
-matched <- data.matched$ID
-
-write.table(matched, file='aim3matchedID.csv', sep=',', row.names=F, col.names=T,
-            quote=F)
-
+write.table(ps_df, file='aim3ID.csv', sep=',', row.names=F, col.names=T, quote=F)

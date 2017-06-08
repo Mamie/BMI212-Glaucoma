@@ -4,7 +4,7 @@ authors: Mamie Wang, Soltan Malekghassemi, Sunil Pai
 
 contributions:
 - All authors contributed equally to the completion of this project
-- Mamie worked on cohort selection, propensity score matching, model search and building, documentation, figures, and paper writing.
+- Mamie worked on cohort selection, data exploration/cleanup, propensity score matching, model search and building, documentation, figures, and paper writing.
 - Soltan worked on background, model search and building, troubleshooting, figures, and paper writing.
 - Sunil worked on background, data exploration/cleanup, medication data preprocessing, model search and building, and paper writing.
 
@@ -16,6 +16,7 @@ balanceAnalysis.R
 aim1.R
 aim1SensitivityAnalysis.R
 aim2.R
+aim3Preprocess.py
 aim3PSM.R
 aim3.R
 ```

@@ -1,3 +1,8 @@
+# BMI 212 Glucoma 
+# Masood Malekghassemi (merging cohortDrug.csv and propensity score analysis)
+# Sunil Pai (model design and selection of optimizer)
+# specific aim 3: effect of diabetic medication on NDD for diabetes patients
+
 library(lme4)
 library(dplyr)
 
