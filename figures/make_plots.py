@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+# BMI 212 Glaucoma
+#  Masood Malekghassemi
 
 import pandas as pd
 import numpy as np
