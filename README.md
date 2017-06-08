@@ -8,7 +8,8 @@ contributions:
 - Soltan worked on background, model search and building, troubleshooting, figures, and paper writing.
 - Sunil worked on background, data exploration/cleanup, medication data preprocessing, model search and building, and paper writing.
 
-The script/ folder contain all the R script for the analysis presented in the final report. The sequence of execution is:
+The `script/` folder contain all the R scripts for the analysis presented in the final report. The sequence of execution is:
+```
 cohortSelection.R
 PropensityScoreMatching.R
 balanceAnalysis.R
@@ -17,7 +18,8 @@ aim1SensitivityAnalysis.R
 aim2.R
 aim3PSM.R
 aim3.R
-The notebook/ folder contains the jupyter notebook for data exploration.
+```
+The `notebook/` folder contains jupyter notebooks for data exploration.
 
-The figures/ folder contains the files to produce the figures in the final report. 
+The `figures/` folder contains scripts to produce the figures in the final report. 
 
